@@ -1,10 +1,3 @@
-=begin
-I had a ((an adjective)) sandwich for lunch today. It dripped all over my ((body part)) and ((a noun)).
-    ((..))
-    ((gem:...))
-Our favourite language is Ruby. We think Ruby is better than Emerald.
-=end
-
 if __FILE__ == $0
 
 stories = []
