@@ -9,9 +9,9 @@ if __FILE__ == $0
 
 stories = []
 stories.push("I had a ((adjective)) sandwich for lunch today. It dripped all over my ((body part)) and ((noun)).")
-stories.push("Our favourite language is ((lan:language)). We think ((lan)) is better than ((another language)).")
+stories.push("Our favourite language is ((lan:programming language)). We think ((lan)) is better than ((another language)).")
 stories.push("I watched ((tv show)) last night. The cameo appearance by ((actor)) was ((adjective)).")
-stories.push("Yesterday I found a ((noun)) and a ((different noun)) in my ((container)) and used them to make a rocket spaceship.")
+stories.push("Yesterday I found a ((noun)) and a ((different noun)) in ((place)) and used them to make a rocket spaceship.")
 stories.push("While crossing the road I got hit by a ((lar:large object)). The force of the ((lar)) broke my ((body part)) and made me feel very ((emotion)).")
 
 rng = Random.new
@@ -19,7 +19,6 @@ storyNumber = rng.rand(0..4)
 story = stories[storyNumber]
 
 placeholders = Hash.new
-puts(story)
 index1 = story.index('((')
 begin
   index2 = story.index('))',index1)
@@ -41,11 +40,15 @@ begin
 end while (index1 != nil)
 
 placeholders.each do |category,choice|
-  if /(\({2}.*:[^\)]*\){2}?)/ =~ story
-    puts $1
+  if /(\({2}.*:[^\)]*\){2})/ =~ story   # If the sentence has a pointer placeholder i.e. ((pointer:type))
+    pointer = $1[2,$1.length].split(':')[0]
+    story.gsub!("((#{pointer}))",choice)
+    story.gsub!(/\({2}.*:[^\)]*\){2}/,choice)
+  else
+    story.gsub!("((#{category}))",choice)
   end
-  # story.gsub!("((#{category}))",choice)
 end
+
 puts(story)
 
 end
